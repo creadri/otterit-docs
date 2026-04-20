@@ -8,7 +8,8 @@ find . -type f -name "*.md" | while read -r f; do
   out="$dir/$base.pdf"
 
   if grep -q "^marp: true" "$f"; then
-    marp "$f" --pdf --allow-local-files --theme-set "$THEMES_DIR" -o "$out"
+    echo "test"
+    #marp "$f" --pdf --allow-local-files --no-parallel --theme-set "$THEMES_DIR" -o "$out"
   else
     (cd "$dir" && pandoc "$base.md" -o "$base.pdf" --pdf-engine=pdflatex -V geometry:margin=1in)
     (cd "$dir" && pandoc "$base.md" -o "$base.epub")

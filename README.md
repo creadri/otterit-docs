@@ -15,12 +15,6 @@ Vendor-agnostic network security whitepapers and governance documents. Ready to 
 |----------|--------|-------------|
 | [Firewall Automation: Simplify First](Automation/Automation.md) | published | When automation makes sense, what to do first, and how to avoid the common traps |
 
-### Governance
-
-| Document | Status | Description |
-|----------|--------|-------------|
-| [Firewall Governance](Governances/Firewall%20Governance.md) | draft | Rule policy, nomenclature, lifecycle, ownership, and review cadence |
-
 ### Slides
 
 | Deck | Description |
@@ -37,7 +31,6 @@ whitepapers/
 │   ├── Automation.md           # Whitepaper
 │   ├── Automation.slides.md    # Marp slide deck
 │   ├── diagrams/               # D2 source + rendered SVGs
-│   └── .research/              # Raw research notes (not published)
 ├── Governances/
 │   └── Firewall Governance.md
 └── scripts/
