@@ -1,0 +1,26 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 103
+  }
+}
+
+direction: right
+
+A: Engineer\ndefines intent\nin Nautobot
+B: Aerleon\ntranslates to\nvendor config
+C: Batfish\nvalidates\noffline
+D: Safe? {shape: diamond}
+E: Block +\nalert engineer
+F: Pull Request\n& peer review
+G: Merge →\nAnsible/Nornir\npushes to prod
+H: Reconciliation\nloop detects drift
+
+A -> B
+B -> C
+C -> D
+D -> E: No
+D -> F: Yes
+F -> G
+G -> H
+H -> A: Drift found

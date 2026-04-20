@@ -1,0 +1,39 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 103
+  }
+}
+
+direction: right
+
+Governance: {
+  g1: Pick NIST / ISO 27001 / CIS baseline
+  g2: Document internal network policy
+  g3: Define risk appetite & exposure limits
+}
+
+Audit: {
+  a1: Export full rule inventory
+  a2: Usage analysis (90–180 days)
+  a3: Detect shadow & duplicate rules
+  a4: Identify ownership gaps
+}
+
+Simplify: {
+  s1: Remove unused & shadowed rules
+  s2: Consolidate overlapping rules
+  s3: Replace IPs with named objects
+  s4: Enforce naming convention
+}
+
+Lifecycle: {
+  l1: Define request & approval workflow
+  l2: Mandatory expiry on every rule
+  l3: Annual review cycle
+  l4: Deploy Source of Truth (Nautobot / NetBox)
+}
+
+Governance -> Audit
+Audit -> Simplify
+Simplify -> Lifecycle

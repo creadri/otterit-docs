@@ -1,0 +1,24 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 103
+  }
+}
+
+direction: right
+
+A: Nautobot
+B: Aerleon
+C: Batfish
+D: Safe? {shape: diamond}
+E: PR → Merge → Ansible/Nornir
+F: Block + alert
+G: Production
+
+A -> B: intent
+B -> C: vendor config
+C -> D
+D -> E: Yes
+D -> F: No
+E -> G
+G -> A: drift check

@@ -1,0 +1,30 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 103
+  }
+}
+
+direction: down
+
+A: Homework done?\nGovernance, audit,\nsimplify, lifecycle {shape: diamond}
+B: Do the homework first
+C: How many rules\n& devices? {shape: diamond}
+D: Rate of change? {shape: diamond}
+E: Automation\nrecommended
+F: Manual +\nperiodic review
+G: Team has\nDevOps/Python skills? {shape: diamond}
+H: Open source or\nhybrid stack
+I: Commercial\nNSPM platform
+J: Invest in team\n& process discipline
+
+A -> B: No
+A -> C: Yes
+C -> D: < 500 rules, < 5 devices
+C -> E: 500+ rules, 5+ devices
+D -> F: Stable — few changes/month
+D -> E: Dynamic — weekly+ changes
+E -> G
+G -> H: Yes
+G -> I: No
+F -> J

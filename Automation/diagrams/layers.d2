@@ -1,0 +1,15 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 103
+  }
+}
+
+direction: down
+
+L1: "Layer 1 — Vendor-Native\nPanorama, FortiManager, SmartConsole"
+L2: "Layer 2 — Multi-Vendor NSPM\nTufin, AlgoSec, FireMon"
+L3: "Layer 3 — Enterprise Orchestration\nItential"
+
+L1 -> L2: API / CLI
+L2 -> L3: Workflows

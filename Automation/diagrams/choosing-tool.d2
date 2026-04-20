@@ -1,0 +1,36 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 103
+  }
+}
+
+direction: down
+
+L1: L1 Vendor-Native {
+  PA: Panorama
+  FM: FortiManager
+  SC: SmartConsole
+  FMC: Cisco FMC
+  SD: Security Director
+}
+
+L2: L2 Multi-Vendor NSPM {
+  TU: Tufin
+  AL: AlgoSec
+  FI: FireMon
+}
+
+L3: L3 Enterprise Orchestration {
+  IT: Itential
+}
+
+ITSM: ITSM\nServiceNow / Jira
+IAC: IaC\nTerraform / Ansible
+CMDB: CMDB\nSource of Truth
+
+L1 -> L2: API / CLI
+L2 -> L3: Workflows
+L3 -> ITSM: Integrates
+L3 -> IAC: Integrates
+L3 -> CMDB: Integrates

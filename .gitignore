@@ -1,0 +1,7 @@
+# tools
+
+.obsidian/
+.claude/
+.research/
+.vscode/
+*/diagrams/*.svg

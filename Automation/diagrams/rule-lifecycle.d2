@@ -1,0 +1,29 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 103
+  }
+}
+
+shape: sequence_diagram
+
+R: Requester
+A: Approver
+P: Pipeline
+F: Firewall
+Au: Auditor
+
+R -> A: Request + justification
+A -> P: Approve
+P -> F: Deploy rule
+F -> Au: Hit counters / logs
+
+Review cycle: {
+  Au -> A: Expiry or review due
+
+  No longer needed: {
+    A -> P: Decommission
+    P -> F: Remove rule
+    P -> Au: Archive + audit trail
+  }
+}

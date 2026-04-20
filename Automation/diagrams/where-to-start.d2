@@ -1,0 +1,26 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    # Terminal theme code
+    theme-id: 103
+  }
+}
+
+direction: right
+
+A: 1. Governance
+B: 2. Audit
+C: 3. Simplify
+D: 4. Lifecycle
+E: Ready? {
+  shape: diamond
+}
+F: Evaluate Tooling
+G: Invest in team
+
+A -> B
+B -> C
+C -> D
+D -> E
+E -> F: Yes
+E -> G: No
