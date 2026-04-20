@@ -179,7 +179,7 @@ Simplification solves the past. A lifecycle process prevents the problem from re
 - **Review cycle:** all rules reviewed at least annually. No owner response = rule flagged for removal.
 - **Decommission process:** when an application is retired, its rules are removed. This must be enforced — not optional.
 
-![Where To Start Diagram](./diagrams/rule-lifecycle.svg)
+![Where To Start Diagram](./diagrams/rule-lifecycle.png)
 
 
 **Underpin it with an authoritative Source of Truth.** A lifecycle process needs a system of record. Platforms like Nautobot or NetBox provide structured data models for IP address management, device inventory, and service mapping — with Git integration and API access. Nautobot's Data Validation Engine catches rule duplication and harmful overlaps before policy is ever applied. Its Golden Config app generates intended configurations, runs automated backups, and executes compliance remediation. The key: the source of truth must be the _only_ place network state is defined. Two sources of truth means none.
@@ -188,11 +188,11 @@ This step is organizational, not technical. It requires buy-in from security, ne
 
 Only after completing these four steps does it make sense to evaluate automation tooling. At that point, you have a clean rule base, a consistent model, defined ownership, and a process to maintain it. Automation has something to work with.
 
-![Where To Start Diagram](./diagrams/where-to-start.svg)
+![Where To Start Diagram](./diagrams/where-to-start.png)
 
 Task breakdown per phase:
 
-![Where To Start Diagram](./diagrams/where-to-start-tasks.svg)
+![Where To Start Diagram](./diagrams/where-to-start-tasks.png)
 
 ## Cost Analysis
 
@@ -313,7 +313,7 @@ Drift is still inevitable even with the best processes. Rules accumulate, except
 
 If the answer lands on "yes, automate" — the follow-up question is _which tier_: vendor-native (Layer 1) may already cover your needs, or you might need cross-vendor NSPM (Layer 2) on top. That decision is covered in "Choosing Your Path" later.
 
-![Need Automation Diagram Question](./diagrams/need-automation.svg)
+![Need Automation Diagram Question](./diagrams/need-automation.png)
 
 ## Don't Go That Route
 
@@ -616,7 +616,7 @@ The most prominent enterprise-grade network orchestration platform.
 
 Most organizations running 2+ firewall vendors need at least Layer 2. The question is whether the scale and workflow complexity justify Layer 3.
 
-![Choosing Tool Diagram](./diagrams/choosing-tool.svg)
+![Choosing Tool Diagram](./diagrams/choosing-tool.png)
 
 ### European Commercial Solutions
 
@@ -792,7 +792,7 @@ For organizations ready to automate rule deployment with safety guardrails.
 **Choose Ansible if:** team is new to automation, needs YAML simplicity, scale is moderate.
 **Choose Nornir if:** team has Python skills, needs performance at scale, wants full programmatic control.
 
-![Combo 2 Open Source Diagram](./diagrams/combo2-open-source.svg)
+![Combo 2 Open Source Diagram](./diagrams/combo2-open-source.png)
 
 ##### Combo 3 — "Full Lifecycle" (enterprise-grade open-source stack)
 

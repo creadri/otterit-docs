@@ -92,7 +92,7 @@ This is what gets automated when you skip the homework.
 
 ## Where to Start — 4 Phases
 
-![Where to Start](diagrams/where-to-start.svg)
+![w:1200](diagrams/where-to-start.png)
 
 Only after these four phases does automation make sense.
 
@@ -149,8 +149,7 @@ Without it, the rule base drifts back within 18 months.
 
 ## Rule Lifecycle Process
 
-
-![h:600px](diagrams/rule-lifecycle.svg)
+![h:600px](diagrams/rule-lifecycle.png)
 
 ---
 
@@ -233,7 +232,7 @@ Three categories, different problems:
 
 ## The Three Layers
 
-![h:450px](./diagrams/layers.svg)
+![h:450px](./diagrams/layers.png)
 
 **Layer 2/3 orchestrate across vendors. They don't replace Layer 1.**
 
@@ -241,7 +240,7 @@ Three categories, different problems:
 
 ## Policy-as-Code — Open Source Stack
 
-![fit](./diagrams/open-source-stack.svg)
+![w:1200px](./diagrams/open-source-stack.png)
 
 Viable with Python/DevOps skills. Not turnkey.
 
@@ -353,7 +352,7 @@ LinkedIn: [adrien-nelis](https://www.linkedin.com/in/adrien-nelis/)
 
 ## Full Whitepaper
 
-**`Automation.md`**
+[Firewall Automation: Simplify First](https://github.com/creadri/otterit-docs/tree/dev/Automation/Automation.pdf)
 
 60+ cited sources.
 All diagrams, data, and vendor detail.
