@@ -176,13 +176,13 @@ Simplification solves the past. A lifecycle process prevents the problem from re
 
 - **Request workflow:** every rule request goes through a defined process — who can request, who approves, what justification is required
 - **Mandatory expiry:** no rule is permanent by default. Every rule gets a review date at creation. Temporary rules get a hard expiry.
-- **Review cycle:** all rules reviewed at least annually. No owner response = rule flagged for removal.
+- **Review cycle:** all rules reviewed every 6 months. No owner response = rule flagged for removal.
 - **Decommission process:** when an application is retired, its rules are removed. This must be enforced — not optional.
 
 ![Where To Start Diagram](./diagrams/rule-lifecycle.png)
 
 
-**Underpin it with an authoritative Source of Truth.** A lifecycle process needs a system of record. Platforms like Nautobot or NetBox provide structured data models for IP address management, device inventory, and service mapping — with Git integration and API access. Nautobot's Data Validation Engine catches rule duplication and harmful overlaps before policy is ever applied. Its Golden Config app generates intended configurations, runs automated backups, and executes compliance remediation. The key: the source of truth must be the _only_ place network state is defined. Two sources of truth means none.
+**Underpin it with an authoritative Source of Truth.** A lifecycle process needs a system of record. Platforms like Nautobot or NetBox provide structured data models for IP address management, device inventory, and service mapping. You can use these databases as source of truth and have a somewhat decent representation of your flows. Its Golden Config app generates intended configurations, runs automated backups, and executes compliance remediation. The key: the source of truth must be the _only_ place network state is defined. Two sources of truth means none.
 
 This step is organizational, not technical. It requires buy-in from security, network, and application teams. Without it, the rule base will drift back to its previous state within 18 months — regardless of what automation you put on top.
 
@@ -433,7 +433,7 @@ Don't start with end-to-end rule lifecycle automation. Start with low-risk, high
 2. **Drift detection** — read-only automation that compares desired state to actual state and flags divergence. No automated changes yet — just visibility. Builds confidence in the data model.
 3. **Compliance reporting** — automated checks against your chosen framework (CIS, NIST, PCI-DSS). Replaces weeks of manual audit preparation with continuous validation.
 
-These are low-risk because they don't push changes to production firewalls. They prove the automation pipeline works, validate the source of truth, and deliver measurable wins to show leadership.
+These are low-risk because they shouldn't alter your production. They prove the automation pipeline works, validate the source of truth, and deliver measurable wins to show leadership.
 
 ### Do Fund It Properly
 
@@ -469,7 +469,7 @@ AI shines hardest in the homework phase — the part nobody wants to do manually
 
 **CMDB and inventory.** Building or cleaning a CMDB extract — correlating IPs to hostnames to applications to owners — is exactly the kind of tedious, pattern-heavy work AI handles well. Feed it your data sources, let it produce a draft inventory, then have engineers validate. Faster and more accurate than doing it manually from scratch.
 
-**Rule translation and migration.** Moving rules between vendors or platforms (Cisco ASA to Palo Alto, on-prem to cloud security groups) is translation work. AI handles syntax conversion well, and tools like Aerleon already automate this — AI extends that to edge cases and non-standard configurations.
+**Rule translation and migration.** Moving rules between vendors or platforms (Cisco ASA to Palo Alto, on-prem to cloud security groups) is translation work. AI handles syntax conversion well and can go a notch further with edge cases and non-standard configurations that are difficult with even vendor-specific migrations tools/scripts.
 
 The point: **AI's biggest impact is in the preparation, not the automation.** It compresses the painful homework that this entire paper argues you must do first. If you're looking for quick wins, start there — not with AI-powered rule deployment.
 
@@ -477,7 +477,7 @@ The point: **AI's biggest impact is in the preparation, not the automation.** It
 
 Three categories of tools address firewall automation today. They solve different problems — mapping them to yours prevents the most expensive mistakes.
 
-- **Global commercial solutions** — US/Israeli market leaders. Deepest features, widest vendor coverage, no data sovereignty guarantees.
+- **Global commercial solutions** — US/Israeli market leaders. Deepest features, widest vendor coverage.
 - **European commercial solutions** — smaller ecosystem, EU-sovereign deployment, NIS2/DORA alignment out of the box. Choose when data residency is a hard requirement.
 - **Open source solutions** — no turnkey NSPM exists, but strong building blocks (Nautobot, Batfish, Aerleon). Viable with Python/DevOps skills and moderate scale.
 
@@ -499,51 +499,84 @@ Centralized consoles from the firewall manufacturers. Deepest integration with t
 
 Centralized management for all PA NGFWs. Strata Cloud Manager extends this to cloud-native.
 
+_Management (Panorama / Strata Cloud Manager):_
+
 - Centralized policy creation, deployment, and monitoring across all PA firewalls
-- ML-powered threat detection, WildFire sandboxing, and TLS inspection
-- Deep application-layer visibility (App-ID) — granular policy per application, not just per port
 - Device groups and templates for scalable policy distribution
+
+_Appliances (PA NGFW):_
+
+- Deep application-layer visibility (App-ID) — granular policy per application, not just per port
+- ML-powered threat detection, WildFire sandboxing, and TLS inspection
 - Deeper policy granularity than most competitors, but requires more training and expertise
-- Target market: enterprise with larger budgets and sophisticated requirements
+
+Target market: enterprise with larger budgets and sophisticated requirements.
 
 **Fortinet — FortiManager**
 
 Centralized device and policy management for the FortiGate fleet.
 
+_Management (FortiManager):_
+
 - Single pane of glass for policy distribution and monitoring across distributed deployments
-- ASIC-accelerated hardware delivers superior raw throughput with lower latency
+- SD-WAN management built in alongside firewall policy
 - Integrated with Fortinet Security Fabric (FortiAnalyzer, FortiSIEM, FortiSOAR)
 - Simpler deployment model and lower cost than Panorama — suits SMB to mid-enterprise well
-- SD-WAN management built in alongside firewall policy
-- Limitation: FortiGate ecosystem only
+
+_Appliances (FortiGate):_
+
+- ASIC-accelerated hardware delivers superior raw throughput with lower latency
+
+Limitation: FortiGate ecosystem only.
 
 **Check Point — SmartConsole (R82)**
 
 Unified management for Check Point's security environment.
 
+_Management (Security Management Server / SmartConsole):_
+
 - Manages up to 500 Security Gateways / Cluster Members with concurrent policy installation
-- R82 introduced dynamic policy layer configuration through direct API calls to Security Gateways — significant for DevOps integration
-- Enhanced HTTPS inspection with dedicated inbound policy and certificate management views
 - Full API access for automation and CI/CD pipeline integration
+- Dedicated views for inbound HTTPS inspection policy and certificate management
 - Auto-updating SmartConsole keeps management tooling current without manual intervention
+
+_Appliances (Security Gateways):_
+
+- R82 introduced dynamic policy layers configured through direct API calls to the Security Gateways — significant for DevOps integration
+- Enhanced HTTPS inspection
+
+Limitation: Check Point ecosystem only.
 
 **Cisco — Secure Firewall Management Center (FMC)**
 
 Centralized management for Cisco Secure Firewall (formerly Firepower).
 
+_Management (FMC):_
+
 - Policy management, event logging, threat detection, and compliance reporting in one console
-- Deep integration with Cisco's broader security ecosystem (ISE, SecureX, Umbrella)
+- Deep integration with Cisco's broader security ecosystem (ISE, XDR, Umbrella)
 - Strongest in environments where Cisco is already the networking backbone
-- Limitation: Cisco ecosystem only; less competitive in pure multi-vendor firewall environments
+
+_Appliances (Secure Firewall):_
+
+- Snort 3 intrusion prevention engine, backed by Cisco Talos threat intelligence
+
+Limitation: Cisco ecosystem only; less competitive in pure multi-vendor firewall environments.
 
 **Juniper — Security Director / Junos Space**
 
 Manages SRX Series firewalls — centralized policy, VPN, and NAT.
 
+_Management (Security Director):_
+
 - Policy-based automation for SRX deployments
 - Integration with Juniper Apstra for intent-based networking
-- Strongest in environments tightly coupling security with enterprise routing
-- Limitation: Juniper/SRX ecosystem only
+
+_Appliances (SRX):_
+
+- Runs Junos, the same OS as Juniper routers — strongest in environments tightly coupling security with enterprise routing
+
+Limitation: Juniper/SRX ecosystem only.
 
 #### Layer 2 — Multi-Vendor NSPM Platforms
 
@@ -683,12 +716,12 @@ No single open-source tool covers full NSPM lifecycle. Each solves one piece. Th
 ##### Source of Truth
 
 **Nautobot** (Network to Code)
-Network Source of Truth platform. Structured data models for IPAM, device inventory, and service mapping. The **Nautobot Firewall Models** plugin adds vendor-agnostic Layer 4 firewall policy and ACL modeling. Data Validation Engine checks for rule duplication and overlaps before policy is applied. Golden Config app generates intended configurations, runs backups, and enforces compliance. Git integration, GraphQL and REST APIs for automation consumers.
+Network Source of Truth platform. Structured data models for IPAM, device inventory, and service mapping. The **Nautobot Firewall Models** plugin adds vendor-agnostic Layer 4 firewall policy and ACL modeling. Golden Config app generates intended configurations, runs backups, and enforces compliance. Git integration, GraphQL and REST APIs for automation consumers.
 
 - GitHub: nautobot/nautobot
 - Plugin: nautobot/nautobot-app-firewall-models
 
-**NetBox** (DigitalOcean / NS1)
+**NetBox** (Netbox Labs)
 The original open-source network source of truth. IPAM, DCIM, circuit tracking, and device inventory. Mature, large community, extensive plugin ecosystem. Does not have native firewall policy modeling like Nautobot's Firewall Models plugin — requires custom plugins or external tools for ACL management.
 
 - GitHub: netbox-community/netbox
@@ -715,7 +748,7 @@ Offline network configuration analysis. Ingests device configs and routing infor
 ##### Execution Engines
 
 **Ansible** (Red Hat)
-Declarative, YAML-based automation. Massive community, specific modules for Nautobot inventory APIs and all major firewall vendors. Well-known, easy to learn for network engineers. Limitation: sequential execution and SSH-per-task overhead can bottleneck at scale when pushing thousands of complex rules.
+Declarative, YAML-based automation. Massive community, specific modules for Nautobot inventory APIs and all major firewall vendors. Well-known, easy to learn for network engineers. Limitation: sequential execution and SSH/HTTPS-per-task overhead can bottleneck at scale when pushing thousands of complex rules.
 
 **Nornir**
 Pure Python automation framework. Bypasses YAML playbooks in favor of Python scripts with multithreading and concurrent execution. Significantly faster than Ansible for large-scale deployments. No external daemons — direct code execution. Requires Python proficiency; steeper learning curve than Ansible.
@@ -804,7 +837,7 @@ Maximum coverage with open-source tools. Closest to what commercial NSPM platfor
 | IPAM | Nautobot (or NetBox) |
 | Policy Translation | Aerleon |
 | Pre-Deployment Validation | Batfish |
-| Execution | Nornir (performance at scale) |
+| Execution | Ansible (performance at scale) |
 | Orchestration | AWX / Ansible Automation Platform (workflow governance, scheduling, RBAC) |
 | Audit & Compliance | Firewall Orchestrator |
 | Version Control | Git + CI/CD (GitHub Actions, GitLab CI) |
@@ -894,7 +927,7 @@ Partially true — with caveats:
 
 - **Managed services exist for open source too.** Red Hat Ansible Automation Platform, Network to Code's managed Nautobot, Intentionet's managed Batfish. You pay for hosting and support the same way you pay commercial licenses.
 - **Containers flatten the maintenance curve.** Running Nautobot, Batfish, Ansible in PaaS (ECS, GKE, OpenShift) removes OS maintenance entirely. Application upgrades remain your job — but they're documented.
-- **Commercial is not maintenance-free either.** Unless you go full SaaS (and most NSPM vendors don't offer it), you still patch, upgrade, schedule downtime. The difference is the safety net — support escalation. Real value, but not total.
+- **Commercial is not maintenance-free either.** Unless you go full SaaS, you still patch, upgrade, schedule downtime. The difference is the safety net — support escalation. Real value, but not total.
 
 #### Argument — "Open source needs skills you don't have"
 
@@ -933,7 +966,7 @@ Open source feature sets are often **broader** than commercial NSPM. Ansible doe
 - Python/DevOps skills exist in-house.
 - Scale is moderate — not 15,000+ devices across 10 vendors.
 - You want tool investments that pay off beyond firewalls.
-- You'll buy paid support for critical components (Ansible Tower, managed Nautobot).
+- You'll buy paid support for critical components (Ansible Automation Platform, managed Nautobot).
 
 **Commercial is viable when:**
 
