@@ -4,3 +4,13 @@
 .claude/
 .research/
 .vscode/
+.agents/
+skills-lock.json
+
+# python
+venv/
+
+# video rendering
+videos/
+music/
+

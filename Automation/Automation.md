@@ -322,6 +322,70 @@ If the answer lands on "yes, automate" — the follow-up question is _which tier
 
 ![Need Automation Diagram Question](./diagrams/need-automation.png)
 
+### Simulation: How Much Can Automation Cost You?
+
+The cost analysis above gives you the method. Here it is with numbers — a simple model you can rerun with your own figures.
+
+**Starting point.** A rule request takes 4 hours end to end: analysis, back-and-forth with the requester, rule design, peer review, implementation in a change window, verification, documentation. At a freelance rate of €650/day (8 hours, so €81.25/hour), that is **€325 per request** — before counting anything else.
+
+Not every request is a 4-hour request:
+
+| Request profile | Typical effort | Cost per request |
+|---|---|---|
+| Simple — add a host to an existing group, standard service | 2 h | €162.50 |
+| Standard — new flow, analysis, review, change window | 4 h | €325 |
+| Complex — new application, multi-firewall path, security review | 8 h | €650 |
+
+Multiply by the yearly volume and you have the cost of doing it by hand. Automation doesn't make requests disappear — it makes each one faster. Assume it cuts **70% of the time per request**: a 4-hour request now takes about 1.2 hours of human effort. That is the optimistic end of the 50–70% target from "What Is the Expected Return?", and it is a gain on time per request, not a percentage of rules automated. The money saved is the most you can spend on automation each year: licence, integration, maintainer time, training. That is your **automation budget**.
+
+| Requests per year | 2 h per request | 4 h per request | 8 h per request |
+|---|---|---|---|
+| 100 (~2/week) | €16,250 → **€11,375** | €32,500 → **€22,750** | €65,000 → **€45,500** |
+| 250 (~5/week) | €40,625 → **€28,438** | €81,250 → **€56,875** | €162,500 → **€113,750** |
+| 500 (~10/week) | €81,250 → **€56,875** | €162,500 → **€113,750** | €325,000 → **€227,500** |
+| 1,000 (~20/week) | €162,500 → **€113,750** | €325,000 → **€227,500** | €650,000 → **€455,000** |
+
+_Manual cost per year → automation budget per year (70% time gain per request — the optimistic view)._
+
+Treat these as the best case. If your pilot measures a 50% gain instead, every budget drops by almost a third — €113,750 becomes €81,250 for 500 standard requests. Rerun the numbers with the gain you actually measure.
+
+![Cost Simulation Chart](./diagrams/cost-simulation.png)
+
+Read it backwards and you get a break-even volume:
+
+> **Minimum requests per year = annual cost of automation ÷ (time gain × cost per request)**
+
+If automation costs you €60,000 a year all-in and you get the full 70%, you need roughly 265 standard requests a year (~5 per week) to justify it. With simple 2-hour requests, 530 (~10 per week). With complex 8-hour requests, 130 (~3 per week). Below that line, the honest answer is manual management with periodic compliance reviews.
+
+Three caveats before you take the number to leadership:
+
+- **It is a run-rate, not a first-year budget.** The time gain only shows up once the preparation phase is done and the pipeline is trusted. Year one also carries the preparation and integration costs.
+- **It is a ceiling, not a target.** If the total cost of the automation you are evaluating exceeds this budget, don't automate — not yet.
+- **The request cost is only the visible part.** Incidents, audit preparation and shadow IT (see "What Does It Currently Cost You?") come on top. They make the case stronger, but only put them in the model if you have measured them.
+
+#### Team Stability Changes the Math
+
+A stable team is most likely a well-trained team: people know the rule base, the process and the platforms, and training is a yearly refresher. An unstable team pays for turnover over and over — every newcomer needs onboarding, is slower for months, and takes tribal knowledge with them when they leave.
+
+Same example — 500 standard requests a year, a team of four:
+
+| | Stable team | Unstable team |
+|---|---|---|
+| Turnover | ≤ 1 departure per year | 2 departures per year |
+| Training | 3 refresher days × 4 people = €7,800 | 2 × 15 onboarding days = €19,500 |
+| Effort per request | 4 h (€325) | ~5 h (€406) — newcomers ramping up, lost knowledge |
+| Manual cost per year | €170,300 | €222,625 |
+| Automation budget at 70% gain | €119,210 | €155,838 |
+| Automation budget at a realistic 50% gain | — | €111,313 |
+
+On paper, the unstable team has the bigger budget. In practice, the optimistic 70% is out of reach — and at a more realistic 50%, its budget falls below the stable team's:
+
+- **Automation needs skills too.** Git, Ansible or Terraform, the pipeline itself — every newcomer has to learn them on top of the firewall platforms.
+- **The automation owner is a single point of failure.** When the one person who understands the pipeline leaves, the platform is orphaned (see "Don't Treat Automation as a One-Time Project").
+- **Tribal knowledge leaks into the tooling.** A team that never stabilised rarely has the documented process that automation needs to encode.
+
+Automation does help an unstable team in one way: a process enforced by a pipeline is easier to onboard onto than a process that lives in people's heads. But that benefit arrives after the team is stable enough to build and run it. Instability makes automation look cheaper on paper and harder in practice. **Stabilise the team first — it is part of the homework.**
+
 ## Don't Go That Route
 
 What follows are approaches that look reasonable on paper but consistently fail. Backed by industry data, post-mortems, and patterns I've seen repeatedly.
